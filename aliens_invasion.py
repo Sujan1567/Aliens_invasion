@@ -1,6 +1,7 @@
 import sys
 import pygame
 from settings import Settings
+from ship import Ship
 
 class Aliensinvasion:
     """This is main class for the game: aliens invasion."""
@@ -19,6 +20,9 @@ class Aliensinvasion:
         self.screen = pygame.display.set_mode((self.setting.screen_width,self.setting.screen_height))
         pygame.display.set_caption("Alien invasion")
 
+        #calling the instance of the ship class.
+        self.ship = Ship(self)
+
 
     def run_game(self):
         """Method to run the game."""
@@ -29,10 +33,15 @@ class Aliensinvasion:
                     sys.exit()
 
             self.screen.fill(self.setting.bg_color)
+
+            #calling the biltme method for locating the ship in the screen.
+            self.ship.biltme() 
+
             #calling the function for changing action in game.
             pygame.display.flip()
             #Making the game to change repeatly for 60 times per second.
-            self.clock.tick(60)        
+            self.clock.tick(60)     
+
 
 #conditions for running the file directly.
 if __name__ == "__main__":
