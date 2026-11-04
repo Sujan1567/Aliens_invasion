@@ -28,20 +28,34 @@ class Aliensinvasion:
         """Method to run the game."""
         while True:
            #iterating the event for user's input.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
 
-            self.screen.fill(self.setting.bg_color)
+            self._update_screen()
 
-            #calling the biltme method for locating the ship in the screen.
-            self.ship.biltme() 
-
-            #calling the function for changing action in game.
-            pygame.display.flip()
             #Making the game to change repeatly for 60 times per second.
             self.clock.tick(60)     
 
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = True
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = True   
+                     
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False  
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False              
+
+    def _update_screen(self):
+        self.screen.fill(self.setting.bg_color)  
+        self.ship.biltme()  
+        self.ship.update()
+        pygame.display.flip()        
 
 #conditions for running the file directly.
 if __name__ == "__main__":

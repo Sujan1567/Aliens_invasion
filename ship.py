@@ -15,6 +15,17 @@ class Ship:
 
         #arranging the location of the ship in the screen.
         self.rect.midbottom = self.screen_rect.midbottom
+        
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        # conditions for right movement of ship.
+        if self.moving_right == True:
+            self.rect.x += 1  
+        #condition for left movement of ship.     
+        if self.moving_left == True:
+            self.rect.x -= 1     
 
     def biltme(self):
         """Method to arrange the location f ship."""
