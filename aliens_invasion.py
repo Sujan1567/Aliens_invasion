@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class Aliensinvasion:
     """This is main class for the game: aliens invasion."""
@@ -23,13 +24,18 @@ class Aliensinvasion:
         #calling the instance of the ship class.
         self.ship = Ship(self)
 
+        #making the instance of the bullets.
+        self.bullets = pygame.sprite.Group()
+
 
     def run_game(self):
         """Method to run the game."""
         while True:
            #iterating the event for user's input.
             self._check_events()
+            self.ship.update()
 
+            self.bullets.update()
             self._update_screen()
 
             #Making the game to change repeatly for 60 times per second.
@@ -54,6 +60,8 @@ class Aliensinvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True  
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullets()    
         elif event.key == pygame.K_q:
             sys.exit()    
 
@@ -63,13 +71,18 @@ class Aliensinvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False  
 
-        
-
+    def _fire_bullets(self):
+        new_bullets = Bullet(self)
+        self.bullets.add(new_bullets)        
+    
 
     def _update_screen(self):
         self.screen.fill(self.setting.bg_color)  
+        #taking the numbers of bullet from given instance.
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         self.ship.biltme()  
-        self.ship.update()
+        self.bullets.update()
         pygame.display.flip()        
 
 #conditions for running the file directly.
