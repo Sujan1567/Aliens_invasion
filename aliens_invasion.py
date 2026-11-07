@@ -35,7 +35,7 @@ class Aliensinvasion:
             self._check_events()
             self.ship.update()
 
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
 
             #Making the game to change repeatly for 60 times per second.
@@ -72,8 +72,18 @@ class Aliensinvasion:
             self.ship.moving_left = False  
 
     def _fire_bullets(self):
-        new_bullets = Bullet(self)
-        self.bullets.add(new_bullets)        
+        if len(self.bullets) < self.setting.bullet_allowed:
+         new_bullets = Bullet(self)
+         self.bullets.add(new_bullets)   
+
+    def _update_bullets(self):
+        self.bullets.update()
+
+         #for deleting the bullet, which pass from screen.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
     
 
     def _update_screen(self):
