@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class Aliensinvasion:
     """This is main class for the game: aliens invasion."""
@@ -26,6 +27,10 @@ class Aliensinvasion:
 
         #making the instance of the bullets.
         self.bullets = pygame.sprite.Group()
+
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
 
     def run_game(self):
@@ -84,6 +89,10 @@ class Aliensinvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        alien = Alien(self)
+        self.aliens.add(alien)            
+
     
 
     def _update_screen(self):
@@ -93,6 +102,7 @@ class Aliensinvasion:
             bullet.draw_bullet()
         self.ship.biltme()  
         self.bullets.update()
+        self.aliens.draw(self.screen)
         pygame.display.flip()        
 
 #conditions for running the file directly.
