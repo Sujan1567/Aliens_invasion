@@ -42,6 +42,7 @@ class Aliensinvasion:
             self.ship.update()
 
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
             #Making the game to change repeatly for 60 times per second.
@@ -105,6 +106,10 @@ class Aliensinvasion:
 
             current_x = alien_width
             current_y += 2 * alien_height    
+
+    def _update_aliens(self):
+        """updating the position of the alien"""
+        self.aliens.update()        
                     
     
     def _create_alien(self, x_position,y_position):
