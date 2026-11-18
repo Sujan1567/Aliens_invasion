@@ -37,4 +37,9 @@ class Ship:
 
     def biltme(self):
         """Method to arrange the location f ship."""
-        self.screen.blit(self.image, self.rect)    
+        self.screen.blit(self.image, self.rect)  
+
+    def center_ship(self):
+        """method for making in the center positions."""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)      
