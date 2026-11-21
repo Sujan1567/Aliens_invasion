@@ -27,6 +27,9 @@ class Aliensinvasion:
         #creating the instance of the Gamestats
         self.stats = Gamestats(self)
 
+        #creating the active flag.
+        self.game_status = True
+
         #calling the instance of the ship class.
         self.ship = Ship(self)
 
@@ -44,10 +47,12 @@ class Aliensinvasion:
         while True:
            #iterating the event for user's input.
             self._check_events()
-            self.ship.update()
 
-            self._update_bullets()
-            self._update_aliens()
+            if self.game_status:
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
+            
             self._update_screen()
 
             #Making the game to change repeatly for 60 times per second.
@@ -129,7 +134,9 @@ class Aliensinvasion:
         self.aliens.update() 
 
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            self._ship_hit()    
+            self._ship_hit()  
+
+        self._check_aliens_bottom()      
                     
     
     def _create_alien(self, x_position,y_position):
@@ -151,19 +158,29 @@ class Aliensinvasion:
         self.setting.fleet_direction *= -1 
 
     def _ship_hit(self):
-        """function for collisions of the ship and aliens."""
-        self.stats.ship_left -= 1
+        if self.stats.ship_left > 0:
+            """function for collisions of the ship and aliens."""
+            self.stats.ship_left -= 1
 
-        #emptying the bullets and aliens
-        self.bullets.empty()
-        self.aliens.empty()
+            #emptying the bullets and aliens
+            self.bullets.empty()
+            self.aliens.empty()
 
-        #creating the fleet and moving ship to center.
-        self._create_fleet()
-        self.ship.center_ship()
+            #creating the fleet and moving ship to center.
+            self._create_fleet()
+            self.ship.center_ship()
 
-        #pausing the game.
-        sleep(0.5)               
+            #pausing the game.
+            sleep(0.5) 
+        else:
+            self.game_status = False    
+
+
+    def _check_aliens_bottom(self):
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= self.setting.screen_height:
+                self._ship_hit()
+                break                  
     
 
     
