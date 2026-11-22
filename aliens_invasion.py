@@ -6,6 +6,7 @@ from bullet import Bullet
 from time import sleep
 from game_stats import Gamestats
 from alien import Alien
+from button import Button
 
 class Aliensinvasion:
     """This is main class for the game: aliens invasion."""
@@ -28,7 +29,7 @@ class Aliensinvasion:
         self.stats = Gamestats(self)
 
         #creating the active flag.
-        self.game_status = True
+        self.game_status = False
 
         #calling the instance of the ship class.
         self.ship = Ship(self)
@@ -40,6 +41,8 @@ class Aliensinvasion:
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
+
+        self.play_button = Button(self, "play")
 
 
     def run_game(self):
@@ -193,6 +196,9 @@ class Aliensinvasion:
         self.ship.biltme()  
         self.bullets.update()
         self.aliens.draw(self.screen)
+
+        if not self.game_status:
+            self.play_button.draw_button()
         pygame.display.flip()        
 
 #conditions for running the file directly.
