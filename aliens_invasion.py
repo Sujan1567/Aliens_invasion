@@ -73,6 +73,29 @@ class Aliensinvasion:
             #pressing up the key.         
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+
+            #pressing the mouse.
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)  
+
+    def _check_play_button(self, mouse_pos):
+        """Checking whether the clicking of mouse is in button """
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_status:
+            self.stats.reset_stats()
+            self.game_status = True 
+
+            #emptying the aliens and bullets. 
+            self.aliens.empty()
+            self.bullets.empty()  
+
+            #creating the fleet and moving the ship in center.
+            self._create_fleet()
+            self.ship.center_ship() 
+
+
+
                   
 
     def _check_keydown_events(self, event):
