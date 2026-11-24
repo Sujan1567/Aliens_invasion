@@ -83,6 +83,7 @@ class Aliensinvasion:
         """Checking whether the clicking of mouse is in button """
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_status:
+            self.setting.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.game_status = True 
 
@@ -93,6 +94,9 @@ class Aliensinvasion:
             #creating the fleet and moving the ship in center.
             self._create_fleet()
             self.ship.center_ship() 
+
+            #making the cursor of the mouse invisible in the games window.
+            pygame.mouse.set_visible(False)
 
 
 
@@ -135,7 +139,8 @@ class Aliensinvasion:
         
         if not self.aliens:
             self.bullets.empty()
-            self._create_fleet()  
+            self._create_fleet() 
+            self.setting.speed_increase() 
 
 
     def _create_fleet(self):
@@ -199,7 +204,8 @@ class Aliensinvasion:
             #pausing the game.
             sleep(0.5) 
         else:
-            self.game_status = False    
+            self.game_status = False  
+            pygame.mouse.set_visible(True)  
 
 
     def _check_aliens_bottom(self):
