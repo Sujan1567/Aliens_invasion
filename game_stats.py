@@ -6,4 +6,5 @@ class Gamestats:
 
     """resetting the statistics after running the main file."""
     def reset_stats(self):
-        self.ship_left = self.setting.ship_limit    
+        self.ship_left = self.setting.ship_limit  
+        self.score = 0  

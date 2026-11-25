@@ -7,6 +7,7 @@ from time import sleep
 from game_stats import Gamestats
 from alien import Alien
 from button import Button
+from scoreboard import Scoreboard
 
 class Aliensinvasion:
     """This is main class for the game: aliens invasion."""
@@ -33,6 +34,9 @@ class Aliensinvasion:
 
         #calling the instance of the ship class.
         self.ship = Ship(self)
+
+        #calling the instance of the scoreboard.
+        self.sb = Scoreboard(self)
 
         #making the group of the bullets.
         self.bullets = pygame.sprite.Group()
@@ -225,6 +229,7 @@ class Aliensinvasion:
         self.ship.biltme()  
         self.bullets.update()
         self.aliens.draw(self.screen)
+        self.sb.show_score()
 
         if not self.game_status:
             self.play_button.draw_button()
