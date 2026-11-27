@@ -89,11 +89,12 @@ class Aliensinvasion:
         if button_clicked and not self.game_status:
             self.setting.initialize_dynamic_settings()
             self.stats.reset_stats()
+            self.sb.prep_score()
             self.game_status = True 
 
             #emptying the aliens and bullets. 
-            self.aliens.empty()
             self.bullets.empty()  
+            self.aliens.empty()
 
             #creating the fleet and moving the ship in center.
             self._create_fleet()
@@ -139,7 +140,13 @@ class Aliensinvasion:
 
       
     def _check_bullets_alien_collision(self):
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)   
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True) 
+
+        if collisions:
+            # self.stats.score += self.setting.alien_points
+            for aliens in collisions.values():
+                self.stats.score += self.setting.alien_points * len(aliens)
+            self.sb.prep_score()  
         
         if not self.aliens:
             self.bullets.empty()
