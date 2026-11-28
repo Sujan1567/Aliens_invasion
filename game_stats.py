@@ -3,6 +3,7 @@ class Gamestats:
     def __init__(self, ai_game):
         self.setting = ai_game.setting
         self.reset_stats()
+        self.high_score = 0
 
     """resetting the statistics after running the main file."""
     def reset_stats(self):
